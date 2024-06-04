@@ -1,13 +1,13 @@
+import 'package:store_app/models/product_model.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:http/http.dart';
-import 'package:store_app/helper/api.dart';
-import 'package:store_app/models/product_model.dart';
+class CategoriesService {
+  Future<List<ProductModel>> getCategoriesProducts(
+      {required String categoryName}) async {
+    http.Response response = await http.get(
+        Uri.parse("https://fakestoreapi.com/products/category/$categoryName"));
 
-class GetAllProductsService {
-  Future<List<ProductModel>> getAllProducts() async {
-    Response response =
-        await Api().get(url: 'https://fakestoreapi.com/products');
     if (response.statusCode == 200) {
       List<ProductModel> productsList = [];
       List<dynamic> data = jsonDecode(response.body);
